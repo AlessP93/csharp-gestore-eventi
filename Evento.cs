@@ -1,41 +1,98 @@
-﻿//creare una classe Evento che abbia i seguenti attributi: 
+﻿//Creare una classe Evento che abbia i seguenti attributi: 
+//Con relativi controlli
 public class Evento
 {
-    public string Titolo { get; set; }
-    public DateTime Data { get; set; }
-    public int MaxCapienza { get; } 
-    public int PostiPrenotati { get; }
-
-    public Evento(string titolo, DateTime data, int maxCapienza, int postiPrenotati)
+    public string _titolo; //proprietà
+    public string Titolo
     {
-        Titolo = titolo;
-        Data = data;
-        MaxCapienza = maxCapienza;
-        PostiPrenotati = postiPrenotati;
-    }
-
-    //controlli
-    public void DataPassata()
-    {
-        DateTime DataOggi = DateTime.Now;
-        if (Data < DataOggi)
+        get => _titolo;
+        set
         {
-            Console.WriteLine("La data è già passata");
+            if (Titolo == "")
+            {
+                throw new Exception("Il titolo non può essere vuoto");
+
+            }
+            _titolo = Titolo;
         }
     }
-    public void TitoloVuoto()
+    public DateTime _data;
+    public DateTime Data
     {
-        if (Titolo == "")
+        get => _data;
+        set
         {
-            Console.WriteLine("Devi inserire un titolo");
+            if (_data < DateTime.Now)
+            {
+                throw new Exception("La data è già passata");
+
+            }
+            _data = Data;
         }
     }
-    public void NumeroCapienza()
+    public int _maxCapienza;
+    public int MaxCapienza
     {
-
-        if (MaxCapienza >= 0)
+        get => _maxCapienza;
+        private set
         {
-            
+            if (_maxCapienza < 1)
+            {
+                throw new Exception("La capienza non può essere 0");
+            }
+            _maxCapienza = MaxCapienza;
         }
+    }
+    public int PostiPrenotati { get; private set; }
+
+    public Evento(string _titolo, DateTime _data, int _maxCapienza)
+    {
+        Titolo = _titolo;
+        Data = _data;
+        MaxCapienza = _maxCapienza;
+        PostiPrenotati = 0;
+    }
+
+    //Metodi
+    public void PrenotaPosti(int posti)
+    {
+        if (posti > _maxCapienza - PostiPrenotati)
+        {
+            throw new Exception("Non ci sono posti disponibili");
+        }
+        if (_data < DateTime.Now)
+        {
+            throw new Exception("La data è già passata");
+
+        }
+        MaxCapienza = MaxCapienza - posti;
+        PostiPrenotati = PostiPrenotati + posti;
+
+    }
+    public void DisdiciPosti(int posti)
+    {
+        if (posti > PostiPrenotati)
+        {
+            throw new Exception("Non ci sono abbastanza posti per disdire");
+        }
+        if (_data < DateTime.Now)
+        {
+            throw new Exception("La data è già passata");
+
+        }
+        MaxCapienza = MaxCapienza + posti;
+        PostiPrenotati = PostiPrenotati - posti;
+
+    }
+    public override string ToString()
+    {
+        string riga = "";
+        riga += Data.ToString("dd/MM/yyyy") + Titolo;
+        return riga;
     }
 }
+//public override string ToString()
+//{
+//    return $"{Titolo} - {Data.ToString("dd/MM/yyyy")}";
+//}
+
