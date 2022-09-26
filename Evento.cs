@@ -2,11 +2,11 @@
 public class Evento
 {
     public string Titolo { get; set; }
-    public DateTime Data { get; }
-    public double MaxCapienza { get; }
+    public DateTime Data { get; set; }
+    public int MaxCapienza { get; } 
     public int PostiPrenotati { get; }
 
-    public Evento(string titolo, DateTime data, double maxCapienza, int postiPrenotati)
+    public Evento(string titolo, DateTime data, int maxCapienza, int postiPrenotati)
     {
         Titolo = titolo;
         Data = data;
@@ -23,5 +23,19 @@ public class Evento
             Console.WriteLine("La data è già passata");
         }
     }
-    public void 
+    public void TitoloVuoto()
+    {
+        if (Titolo == "")
+        {
+            Console.WriteLine("Devi inserire un titolo");
+        }
+    }
+    public void NumeroCapienza()
+    {
+
+        if (MaxCapienza >= 0)
+        {
+            
+        }
+    }
 }

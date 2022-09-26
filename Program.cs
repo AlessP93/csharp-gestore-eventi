@@ -1,4 +1,2 @@
-﻿public class gino
-{
-
-}
+﻿
+List<Evento> Eventi = new List<Evento>();
